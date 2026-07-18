@@ -79,8 +79,9 @@ self.addEventListener('install', (event) => {
         .map((u) => { try { return new URL(u, cssUrl).href; } catch (_) { return null; } })
         .filter(Boolean);
       for (const f of fontUrls) {
+        // 字体必须走 CORS 模式缓存（跨域字体浏览器按 CORS 加载，opaque 响应会被拒）
         try {
-          const r = await fetch(f, { mode: 'no-cors' });
+          const r = await fetch(f, { mode: 'cors' });
           if (r && r.type !== 'error') await cache.put(f, r.clone());
         } catch (_) {}
       }
