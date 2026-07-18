@@ -1,0 +1,179 @@
+/* ============================================================
+   theme.css — 豆包浅蓝配色规范 + 深浅双主题
+   所有色值用 CSS 变量，切主题只改 data-theme 属性。
+   ============================================================ */
+:root {
+  /* 主色（豆包蓝） */
+  --fy-primary: #3D7EFF;
+  --fy-primary-soft: #7AA7FF;
+  --fy-primary-bg: #EAF1FF;
+
+  /* 文字 */
+  --fy-text: #1E2735;
+  --fy-text-2: #5C6880;
+  --fy-text-3: #8A95A8;
+
+  /* 背景 / 表面 */
+  --fy-bg: #F3F7FF;
+  --fy-surface: #FFFFFF;
+  --fy-surface-2: #F7F9FC;
+  --fy-surface-3: #EEF2F8;
+
+  /* 边框 */
+  --fy-border: #E3E9F2;
+  --fy-border-2: #D5DEEC;
+
+  /* 功能色 */
+  --fy-success: #1D9E75;
+  --fy-success-bg: #E1F5EE;
+  --fy-danger: #F55353;
+  --fy-danger-bg: #FDEDED;
+  --fy-warning: #F5A524;
+  --fy-warning-bg: #FEF3E2;
+
+  /* 代码 */
+  --fy-code-bg: #1E2735;
+  --fy-code-text: #E6EAF0;
+
+  /* 阴影 */
+  --fy-shadow: 0 4px 16px rgba(30, 39, 53, 0.06);
+  --fy-shadow-lg: 0 8px 32px rgba(30, 39, 53, 0.10);
+
+  /* 圆角 */
+  --fy-radius: 10px;
+  --fy-radius-sm: 6px;
+  --fy-radius-lg: 14px;
+
+  /* 布局 */
+  --fy-nav-h: 56px;
+  --fy-side-w: 256px;
+}
+
+[data-theme="dark"] {
+  --fy-primary: #4D8AFF;
+  --fy-primary-soft: #6B9AFF;
+  --fy-primary-bg: #1A2438;
+
+  --fy-text: #E6EAF0;
+  --fy-text-2: #A8B3C4;
+  --fy-text-3: #6B7689;
+
+  --fy-bg: #0F1623;
+  --fy-surface: #1A2333;
+  --fy-surface-2: #232E42;
+  --fy-surface-3: #2C3850;
+
+  --fy-border: #2C3850;
+  --fy-border-2: #3A4866;
+
+  --fy-success-bg: #1A3329;
+  --fy-danger-bg: #331F22;
+  --fy-warning-bg: #332A1A;
+
+  --fy-code-bg: #0A0F18;
+  --fy-code-text: #C8D2E0;
+
+  --fy-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  --fy-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+/* —— 基础 —— */
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
+  background: var(--fy-bg);
+  color: var(--fy-text);
+  font-size: 15px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  transition: background 0.25s, color 0.25s;
+}
+a { color: var(--fy-primary); text-decoration: none; }
+a:hover { text-decoration: underline; }
+h1, h2, h3 { color: var(--fy-text); line-height: 1.4; }
+code, pre { font-family: "SF Mono", "JetBrains Mono", "Fira Code", Consolas, monospace; }
+
+/* —— 卡片 —— */
+.fy-card, .section-block {
+  background: var(--fy-surface);
+  border: 1px solid var(--fy-border);
+  border-radius: var(--fy-radius-lg);
+  box-shadow: var(--fy-shadow);
+}
+
+/* —— 按钮 —— */
+.fy-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 9px 16px;
+  border-radius: var(--fy-radius);
+  border: 1px solid var(--fy-border-2);
+  background: var(--fy-surface);
+  color: var(--fy-text);
+  font-size: 14px; font-weight: 500;
+  cursor: pointer; transition: all 0.18s;
+  text-decoration: none; white-space: nowrap;
+}
+.fy-btn:hover { border-color: var(--fy-primary); color: var(--fy-primary); text-decoration: none; }
+.fy-btn-primary {
+  background: var(--fy-primary); color: #fff; border-color: var(--fy-primary);
+}
+.fy-btn-primary:hover { background: var(--fy-primary-soft); border-color: var(--fy-primary-soft); color: #fff; }
+.fy-btn-ghost { background: transparent; border-color: var(--fy-border-2); }
+.fy-btn-danger { background: var(--fy-danger); color: #fff; border-color: var(--fy-danger); }
+.fy-btn-sm { padding: 6px 12px; font-size: 13px; }
+
+/* —— 进度条 —— */
+.fy-progress {
+  height: 8px; background: var(--fy-surface-3); border-radius: 999px; overflow: hidden;
+}
+.fy-progress > span {
+  display: block; height: 100%; background: var(--fy-primary); border-radius: 999px;
+  transition: width 0.4s ease;
+}
+
+/* —— 弹窗 —— */
+.fy-modal-mask {
+  position: fixed; inset: 0; z-index: 100;
+  background: rgba(15, 22, 35, 0.45);
+  display: flex; align-items: flex-start; justify-content: center;
+  padding: 8vh 16px 16px;
+  backdrop-filter: blur(2px);
+}
+.fy-modal {
+  background: var(--fy-surface); border-radius: var(--fy-radius-lg);
+  box-shadow: var(--fy-shadow-lg); width: 100%; max-width: 560px;
+  max-height: 80vh; overflow: hidden; display: flex; flex-direction: column;
+}
+
+/* —— 滚动条 —— */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-thumb { background: var(--fy-border-2); border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: var(--fy-text-3); }
+::-webkit-scrollbar-track { background: transparent; }
+
+/* —— 文字工具类 —— */
+.text-2 { color: var(--fy-text-2); }
+.text-3 { color: var(--fy-text-3); }
+.text-fy-primary { color: var(--fy-primary); }
+.text-fy-success { color: var(--fy-success); }
+.text-fy-danger { color: var(--fy-danger); }
+.font-bold { font-weight: 700; }
+.font-semibold { font-weight: 600; }
+.hidden { display: none !important; }
+
+/* —— 动画 —— */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.fade-up { animation: fadeUp 0.3s ease; }
+@keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)} }
+.shake { animation: shake 0.3s; }
+
+/* —— toast —— */
+.fy-toast {
+  position: fixed; left: 50%; bottom: calc(40px + env(safe-area-inset-bottom));
+  transform: translateX(-50%); z-index: 200;
+  background: var(--fy-text); color: var(--fy-surface);
+  padding: 10px 18px; border-radius: 999px; font-size: 14px;
+  box-shadow: var(--fy-shadow-lg); animation: fadeUp 0.25s;
+}
