@@ -10,6 +10,10 @@
     if (global.FYNav) FYNav.init();
     if (global.FYSidebar) FYSidebar.init();
     if (global.FYRouter) FYRouter.start();
+    // 注册 Service Worker：断网也能用（离线缓存）
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js').catch(function () {});
+    }
   }
 
   if (document.readyState === 'loading') {
