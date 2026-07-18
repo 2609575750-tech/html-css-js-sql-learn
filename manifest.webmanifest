@@ -1,0 +1,16 @@
+{
+  "name": "前端自学站 - HTML/CSS/JS/SQL",
+  "short_name": "前端自学",
+  "description": "零基础前端自学站 —— HTML/CSS/JavaScript/SQL 一站学，浏览器本地运行，打开网页就能学、能写、能跑。",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F3F7FF",
+  "theme_color": "#3D7EFF",
+  "icons": [
+    { "src": "assets/images/apple-touch-icon.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "assets/images/apple-touch-icon.png", "sizes": "180x180", "type": "image/png", "purpose": "any" },
+    { "src": "assets/images/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}
