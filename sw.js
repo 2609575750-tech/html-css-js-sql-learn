@@ -51,17 +51,26 @@ self.addEventListener('install', (event) => {
     const cache = await caches.open(CACHE);
     // 应用壳：逐个缓存，单个失败不影响整体
     await Promise.all(APP_SHELL.map((u) => cache.add(u).catch(() => {})));
-    // CDN 脚本/样式
-    for (const u of CDN) {
+
+    // Tailwind Play CDN：不发 CORS 头，用 no-cors 拿 opaque 响应（可缓存、可服务脚本）
+    try {
+      const r = await fetch(CDN[0], { mode: 'no-cors' });
+      if (r && r.type !== 'error') await cache.put(CDN[0], r.clone());
+    } catch (_) {}
+
+    // sql.js：js + wasm（no-cors 即可缓存）
+    for (const u of [CDN[2], CDN[3]]) {
       try {
-        const r = await fetch(u, { mode: 'cors' });
-        if (r && r.ok) await cache.put(u, r.clone());
-      } catch (_) { /* 失败时交给运行时缓存补偿 */ }
+        const r = await fetch(u, { mode: 'no-cors' });
+        if (r && r.type !== 'error') await cache.put(u, r.clone());
+      } catch (_) {}
     }
-    // Font Awesome 字体文件：解析 CSS 里的 url(...) 一并缓存
+
+    // Font Awesome：css 用 cors 读取文本（解析字体路径），再 no-cors 缓存字体文件
     try {
       const cssUrl = CDN[1];
       const res = await fetch(cssUrl, { mode: 'cors' });
+      if (res && res.type !== 'error') await cache.put(cssUrl, res.clone());
       const text = await res.text();
       const fontUrls = [...text.matchAll(/url\(\s*(['"]?)([^)'"]+)\1\s*\)/g)]
         .map((m) => m[2])
@@ -71,8 +80,8 @@ self.addEventListener('install', (event) => {
         .filter(Boolean);
       for (const f of fontUrls) {
         try {
-          const r = await fetch(f, { mode: 'cors' });
-          if (r && r.ok) await cache.put(f, r.clone());
+          const r = await fetch(f, { mode: 'no-cors' });
+          if (r && r.type !== 'error') await cache.put(f, r.clone());
         } catch (_) {}
       }
     } catch (_) {}
